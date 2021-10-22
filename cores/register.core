@@ -1,0 +1,14 @@
+CAPI=1
+[main]
+description = "register"
+
+[verilog]
+src_files =
+  misc/registers/hdl_code/register.sv
+  
+
+[provider]
+name = github
+user = germancq
+repo = IPCores
+version = master    

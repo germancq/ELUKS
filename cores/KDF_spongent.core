@@ -1,0 +1,20 @@
+CAPI=1
+[main]
+description = "KDF spongent"
+
+depend =
+  counter
+  register
+  memory_module
+  spongent_hash
+
+[verilog]
+src_files =
+  KDF/KDF_spongent/hdl_code/KDF_spongent.sv
+
+
+[provider] 
+name = github
+user = germancq
+repo = IPCores
+version = master

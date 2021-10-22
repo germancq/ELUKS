@@ -1,0 +1,14 @@
+CAPI=1
+[main]
+description = "adder"
+
+[verilog]
+src_files =
+  misc/adder/hdl_code/adder.sv
+  
+
+[provider]
+name = github
+user = germancq
+repo = IPCores
+version = master    

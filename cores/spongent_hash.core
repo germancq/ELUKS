@@ -1,0 +1,20 @@
+CAPI=1
+[main]
+description = "spongent hash"
+
+depend =
+ register
+ counter
+
+
+[verilog]
+src_files =
+  hash_functions/spongent/hdl_code/spongent.sv
+  
+
+
+[provider] 
+name = github
+user = germancq
+repo = IPCores
+version = master

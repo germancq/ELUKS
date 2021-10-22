@@ -1,0 +1,21 @@
+CAPI=1
+[main]
+description = "present ctr cipher"
+
+depend = 
+  present_cipher
+  adder
+
+[verilog]
+src_files =
+  block_ciphers/present_cipher_ctr/hdl_code/present_ctr.sv
+
+[provider] 
+name = github
+user = germancq
+repo = IPCores
+version = master
+
+
+
+ 

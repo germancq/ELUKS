@@ -1,0 +1,49 @@
+CAPI=2:
+
+name : ::eluks_example_read:0
+description : eluks first example
+  
+  
+
+targets :
+  synth :
+
+    toplevel  : top
+
+    filesets  :
+      - rtl_top
+      - constraints
+
+    default_tool : vivado
+
+    tools:
+      vivado:
+        part : xc7a100tcsg324-1
+
+filesets :
+  rtl_top :
+
+    depend :
+      - eluks
+      - seven_segments
+      - sdspi
+      - memory_module
+      
+     
+
+    file_type : verilogSource
+
+    files :
+      - rtl/top.sv
+      - rtl/task_read_raw.sv
+      - rtl/task_read_encrypted.sv
+      - rtl/task_compare.sv
+
+
+  constraints :
+    file_type : xdc
+    files :
+      - data/Nexys4DDR_Master.xdc
+
+
+

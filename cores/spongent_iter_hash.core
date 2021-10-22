@@ -1,0 +1,20 @@
+CAPI=1
+[main]
+description = "spongent iter hash"
+
+depend =
+ register
+ counter
+
+
+[verilog]
+src_files =
+  hash_functions/spongent_iter/hdl_code/spongent_iter.sv
+  
+
+
+[provider] 
+name = github
+user = germancq
+repo = IPCores
+version = master

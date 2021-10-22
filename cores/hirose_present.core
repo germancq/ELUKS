@@ -1,0 +1,21 @@
+CAPI=1
+[main]
+description = "hirose present"
+
+depend =
+  counter
+  register
+  memory_module
+  present_cipher
+
+[verilog]
+src_files =
+  hash_functions/hirose_present/hdl_code/hirose_present_wrapper.sv
+  hash_functions/hirose_present/hdl_code/hirose_present.sv
+
+
+[provider] 
+name = github
+user = germancq
+repo = IPCores
+version = master

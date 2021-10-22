@@ -1,0 +1,20 @@
+CAPI=1
+[main]
+description = "sdspi"
+depend =
+ register
+ counter
+ mux
+
+[verilog]
+src_files =
+  sdspi/hdl_code/sdspihost.sv
+  sdspi/hdl_code/sdcmd.sv
+  sdspi/hdl_code/spi_master.sv
+  
+
+[provider]
+name = github
+user = germancq
+repo = IPCores
+version = master    

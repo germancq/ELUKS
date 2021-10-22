@@ -1,0 +1,72 @@
+CAPI=1
+[main]
+description = "seven_segments"
+
+depend =
+ counter
+
+[verilog]
+src_files =
+  seven_segments/hdl_code/seven_segments.sv
+
+[provider]
+name = github
+user = germancq
+repo = IPCores
+version = master  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

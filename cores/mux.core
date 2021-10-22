@@ -1,0 +1,14 @@
+CAPI=1
+[main]
+description = "mux"
+
+[verilog]
+src_files =
+  misc/mux/hdl_code/mux.sv
+  
+
+[provider]
+name = github
+user = germancq
+repo = IPCores
+version = master    

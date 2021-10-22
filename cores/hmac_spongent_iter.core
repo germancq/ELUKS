@@ -1,0 +1,21 @@
+CAPI=1
+[main]
+description = "HMAC spongent iter"
+
+depend =
+ spongent_iter_hash
+ register
+ counter
+
+
+[verilog]
+src_files =
+  HMAC/hash_iter/hdl_code/hmac_spongent_iter.sv
+  
+
+
+[provider] 
+name = github
+user = germancq
+repo = IPCores
+version = master

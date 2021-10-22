@@ -1,0 +1,19 @@
+CAPI=1
+[main]
+description = "eluks core"
+
+depend =
+  counter
+  register
+  mux
+  present_ctr_cipher
+  hirose_present
+  KDF_spongent
+  spongent_iter_hash
+  hmac_spongent_iter
+
+[verilog]
+src_files =
+  eluks.sv
+
+
