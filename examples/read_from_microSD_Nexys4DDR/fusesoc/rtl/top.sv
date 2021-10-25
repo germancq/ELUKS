@@ -2,7 +2,7 @@
  * @ Author: German Cano Quiveu, germancq
  * @ Create Time: 2021-10-14 13:49:48
  * @ Modified by: German Cano Quiveu, germancq
- * @ Modified time: 2021-10-25 12:44:30
+ * @ Modified time: 2021-10-25 15:55:24
  * @ Description:
  */
 
@@ -37,8 +37,8 @@ assign SD_DAT_2 = 1'b1;
 
 localparam USER_PASSWORD = 64'h1122334455667788;
 localparam START_ELUKS = 0; //block number
-localparam START_RAW_DATA = 19; // block number
-localparam TOTAL_RAW_DATA = 8 << 9; // total bytes
+localparam START_RAW_DATA = 43; // block number
+localparam TOTAL_RAW_DATA = 32 << 9; // total bytes
 
 
 logic spi_ctl;
@@ -218,7 +218,8 @@ task_compare #(
     .spi_busy(spi_busy),
     .eluks_busy(eluks_busy),
     .end_signal(leds[2]),
-    .error(leds[15])
+    .error(leds[15]),
+    .debug()
 );
     
 mux_4 #(.DATA_WIDTH(1)) mux_spi_ctl(

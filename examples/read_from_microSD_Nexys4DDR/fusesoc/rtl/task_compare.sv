@@ -1,8 +1,8 @@
 /**
  * @ Author: German Cano Quiveu, germancq
  * @ Create Time: 2021-10-14 16:35:45
- * @ Modified by: German Cano Quiveu, germancq@dte.us.es
- * @ Modified time: 2021-10-21 22:47:59
+ * @ Modified by: German Cano Quiveu, germancq
+ * @ Modified time: 2021-10-25 14:20:16
  * @ Description:
  */
 
@@ -39,7 +39,8 @@ module task_compare #(
     input eluks_busy,
 
     output logic end_signal,
-    output logic error
+    output logic error,
+    output [31:0] debug
     
 );
     
@@ -108,7 +109,7 @@ module task_compare #(
     );
     assign prev_state = r_state_prev_o;
 
-    
+    assign debug = {current_state,mem_data,eluks_data};
     always_comb begin
         
         next_state = current_state;
