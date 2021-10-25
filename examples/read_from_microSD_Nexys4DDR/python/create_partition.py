@@ -88,6 +88,8 @@ def main() :
 def write_original_file(new_file,file_to_encrypt,raw_blocks,offset):
     file_to_encrypt.seek(0)
     offset_data = raw_blocks+1+offset
+    print('total raw blocks:')
+    print(raw_blocks)
     print('offset raw data:')
     print(offset_data)
     new_file.seek(offset_data*SIZE_BLOCK)
