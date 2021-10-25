@@ -1,0 +1,48 @@
+CAPI=2:
+
+name : ::eluks_example_read_zedboard:0
+description : eluks first example on Zedboard
+  
+  
+
+targets :
+  synth :
+
+    toplevel  : top
+
+    filesets  :
+      - rtl_top
+      - constraints
+
+    default_tool : vivado
+
+    tools:
+      vivado:
+        part : xc7z020clg484-1
+
+filesets :
+  rtl_top :
+
+    depend :
+      - eluks
+      - sdspi
+      - memory_module
+      
+     
+
+    file_type : verilogSource
+
+    files :
+      - rtl/top_zedboard.sv
+      - rtl/task_read_raw.sv
+      - rtl/task_read_encrypted.sv
+      - rtl/task_compare.sv
+
+
+  constraints :
+    file_type : xdc
+    files :
+      - data/Zedboard.xdc
+
+
+
