@@ -2,7 +2,7 @@
  * @ Author: German Cano Quiveu, germancq
  * @ Create Time: 2021-10-14 13:49:48
  * @ Modified by: German Cano Quiveu, germancq
- * @ Modified time: 2021-10-22 12:54:16
+ * @ Modified time: 2021-10-25 12:44:30
  * @ Description:
  */
 
@@ -37,8 +37,8 @@ assign SD_DAT_2 = 1'b1;
 
 localparam USER_PASSWORD = 64'h1122334455667788;
 localparam START_ELUKS = 0; //block number
-localparam START_RAW_DATA = 17; // block number
-localparam TOTAL_RAW_DATA = 6 << 9; // total bytes
+localparam START_RAW_DATA = 19; // block number
+localparam TOTAL_RAW_DATA = 8 << 9; // total bytes
 
 
 logic spi_ctl;

@@ -257,6 +257,6 @@ set_property -dict { PACKAGE_PIN D4    IOSTANDARD LVCMOS33 } [get_ports { uart0_
 
 set_property SEVERITY {Warning} [get_drc_checks LUTLP-1];
 set_property ALLOW_COMBINATORIAL_LOOPS TRUE [get_nets eluks_inst/fsm/spi_r_block];
-set_property ALLOW_COMBINATORIAL_LOOPS TRUE [get_nets eluks_inst/fsm/r_block_prev_i_2_n_0];
+set_property ALLOW_COMBINATORIAL_LOOPS TRUE [get_nets eluks_inst/fsm/r_state_prev/spi_r_block];
 
 
