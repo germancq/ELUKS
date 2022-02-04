@@ -1,0 +1,52 @@
+CAPI=2:
+
+name : ::eluks_example_read_ml605_virtex6:0
+description : eluks first example
+  
+  
+
+targets :
+  synth :
+
+    toplevel  : top
+
+    filesets  :
+      - rtl_top
+      - constraints
+
+    default_tool : ise
+
+    tools:
+      ise:
+        family : virtex6
+        device: XC6VLX240T
+        package: FF1156
+        speed: -1
+
+filesets :
+  rtl_top :
+
+    depend :
+      - eluks
+      - seven_segments
+      - sdspi
+      - memory_module
+      
+     
+
+    file_type : verilogSource
+
+    files :
+      - rtl/top_ml605.v
+      - rtl/task_read_raw.sv
+      - rtl/task_read_encrypted.sv
+      - rtl/task_compare.sv
+
+
+  constraints :
+    file_type : ucf
+    files :
+      - data/ml605.ucf
+
+
+
