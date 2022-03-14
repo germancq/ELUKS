@@ -1,0 +1,14 @@
+CAPI=1
+[main]
+description = "wb eluks core"
+
+depend =
+  eluks
+  eluks_wb_bridge
+  sdspi
+
+[verilog]
+src_files =
+  wb_eluks.sv
+
+

@@ -1,0 +1,14 @@
+CAPI=1
+[main]
+description = "bootloaderModule core"
+
+depend =
+  counter
+  register
+  
+
+[verilog]
+src_files =
+  bootloaderModule.sv
+
+

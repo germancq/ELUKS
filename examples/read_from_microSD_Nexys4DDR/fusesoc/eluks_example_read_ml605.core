@@ -1,6 +1,6 @@
 CAPI=2:
 
-name : ::eluks_example_read_ml605_virtex6:0
+name : ::eluks_example_read_ml605:0
 description : eluks first example
   
   

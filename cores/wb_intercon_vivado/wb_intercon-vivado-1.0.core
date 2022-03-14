@@ -1,0 +1,16 @@
+CAPI=1
+[main]
+description = Wishbone Bus Interconnect utilities
+depend =
+ verilog-arbiter-r1
+
+[verilog]
+src_files =
+ rtl/verilog/wb_arbiter.v
+ rtl/verilog/wb_data_resize.v
+ rtl/verilog/wb_mux.v
+ rtl/verilog/verilog_utils.vh
+ rtl/verilog/wb_common.v
+ rtl/verilog/wb_common_params.v
+
+

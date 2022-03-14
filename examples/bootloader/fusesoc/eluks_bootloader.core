@@ -1,0 +1,122 @@
+CAPI=2:
+
+name : ::eluks_bootloader:0
+description : OR1K system for the Digilent Nexys 4 DDR development board
+
+
+targets :
+  synth :
+
+    toplevel  : orpsoc_top
+
+    filesets  :
+      - wb_intercon_dep
+      - rtl_top
+      - rtl_ip
+      - constraints
+
+    generate :
+      - wb_intercon
+
+    default_tool : vivado
+
+    tools:
+      vivado:
+        part : xc7a100tcsg324-1
+
+filesets :
+  rtl_top :
+
+    depend :
+      - gpio
+      - adv_debug_sys
+      - jtag_tap
+      - mor1kx-3.1
+      - or1200-r2
+      - uart16550-1.5-vivado
+      - wb_intercon-0
+      - bootloaderModule
+      - wb_eluks
+      - counter
+      - seven_segments
+      - sdspi
+     
+
+    file_type : verilogSource
+
+    files :
+      - rtl/orpsoc_top.sv
+      - rtl/include/or1200_defines.v : {is_include_file: true}
+      - rtl/include/orpsoc-defines.v : {is_include_file: true}
+      - rtl/include/timescale.v : {is_include_file: true}
+      - rtl/include/uart_defines.v : {is_include_file: true}
+      - rtl/MIG_ddr/xilinx_ddr2.v
+      - rtl/MIG_ddr/wb2axi.v
+      - rtl/clk/dcm_pll_generator.v
+      - rtl/rst/rstgen.sv
+      - rtl/rom/rom.v
+      - rtl/pulse_button.v
+
+
+
+  rtl_ip:
+    file_type : xci
+    files :
+      - rtl/MIG_ddr/ip/design_1_mig_7series_0_0/mig_a.prj : {file_type : user}
+      - rtl/MIG_ddr/ip/design_1_mig_7series_0_0/design_1_mig_7series_0_0.xci
+
+  constraints :
+    file_type : xdc
+    files :
+      - data/Nexys4DDR_Master.xdc
+
+  wb_intercon_dep:
+    depend:
+      [wb_intercon]
+
+
+
+generate:
+  wb_intercon:
+    generator : wb_intercon_gen
+    parameters:
+      masters:
+        bootloader:
+          slaves:
+            - eluks0
+            - ddr2_bus
+        or1k_i:
+          slaves:
+            - ddr2_bus
+            - rom0
+        or1k_d:
+          slaves: [ddr2_bus, uart0, gpio0, eluks0]
+        
+
+      slaves:
+        ddr2_bus:
+          offset : 0
+          size : 0x8000000
+
+        rom0:
+          offset: 0xf0000000
+          size: 1024
+
+        uart0:
+          datawidth: 8
+          offset: 0x90000000
+          size: 1024
+
+        gpio0:
+          datawidth: 8
+          offset: 0x91000000
+          size: 2
+
+        eluks0:
+          datawidth: 32
+          offset: 0x92000000
+          size: 8
+
+        
+
+        

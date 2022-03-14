@@ -2,7 +2,7 @@
  * @ Author: German Cano Quiveu, germancq
  * @ Create Time: 2021-10-13 16:09:38
  * @ Modified by: German Cano Quiveu, germancq
- * @ Modified time: 2021-10-22 13:08:30
+ * @ Modified time: 2022-03-14 14:23:29
  * @ Description:
  */
 
@@ -56,6 +56,7 @@ module eluks
     input spi_err,
 
     output end_eluks_header,
+    output [31:0] total_blocks,
     output logic error,
     output [31:0] debug_data
 );
@@ -241,6 +242,7 @@ module eluks
         .eluks_busy(eluks_busy),
         .eluks_block_addr(eluks_block_addr),
 
+        .total_blocks(total_blocks),
         .error(error),
         .debug_data(debug_data)
     );
@@ -317,6 +319,8 @@ module eluks_control_unit #(
     output [7:0] eluks_data,
     output [31:0] eluks_block_addr,
 
+    output [31:0] total_blocks,
+
     output logic error,
     output [31:0] debug_data
     
@@ -328,7 +332,7 @@ module eluks_control_unit #(
     localparam BASE_KEY_SLOT = 8'h6 + 8'(DIGEST_SIZE>>3) + 8'(SALT_WIDTH>>3) + 8'(COUNT_WIDTH>>3) + 8'(N>>3) + 8'(BLOCK_SIZE>>3) + 8'(USER_SPACE_WIDTH>>3);
     localparam KEY_SLOT_SIZE = 8'h4 + 8'(SALT_WIDTH>>3) + 8'(COUNT_WIDTH>>3) + 8'((DECRYPT_STAGES*BLOCK_SIZE)>>3) + 8'(BLOCK_SIZE>>3);
     localparam KS_SLOTS_LOG = $clog2(KS_SLOTS);
-    localparam OFFSET_BLOCKNUM_CTR = (9-$clog2(BLOCK_SIZE>>3)); //BLOCK SIZE MUST BE IN BYTES
+    localparam OFFSET_BLOCKNUM_CTR = 0;//(9-$clog2(BLOCK_SIZE>>3)); //BLOCK SIZE MUST BE IN BYTES
 
     
 
@@ -473,7 +477,7 @@ module eluks_control_unit #(
     logic [0:0] user_data_blocks_w [(USER_SPACE_WIDTH>>3)-1:0];
     logic [0:0] user_data_blocks_cl [(USER_SPACE_WIDTH>>3)-1:0];
     logic [USER_SPACE_WIDTH-1:0] user_data_blocks;
-
+    assign total_blocks = user_data_blocks;
     
     generate
         for (i = 0;i<(USER_SPACE_WIDTH>>3) ;i=i+1 ) begin
@@ -674,7 +678,7 @@ module eluks_control_unit #(
         .rst(rst_cipher_block_number),
         .up(cipher_block_number_up),
         .down(1'b0),
-        .din(sel_spi_signal==1?((eluks_block_addr-eluks_first_block)<<OFFSET_BLOCKNUM_CTR):(64'b0)),
+        .din(sel_spi_signal==1?((/*eluks_block_addr*/block_addr-eluks_first_block)<<OFFSET_BLOCKNUM_CTR):(64'b0)),
         .dout(cipher_block_number)
     );        
 
@@ -1408,7 +1412,7 @@ module eluks_control_unit #(
             /*
                 1- Seleccionar primer bloque encriptado
                 2- Leer en Modo CMD18
-                3- Feed Hmac hasta BYTES_IN_NANOFS_PART
+                3- Feed Hmac hasta TOTAL_BYTES
 
             */
             SEL_FIRST_ENCRYPTED_BLOCK:
