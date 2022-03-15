@@ -2,7 +2,7 @@
  * @ Author: German Cano Quiveu, germancq@dte.us.es
  * @ Create Time: 2020-04-14 13:43:32
  * @ Modified by: German Cano Quiveu, germancq
- * @ Modified time: 2022-03-14 17:09:03
+ * @ Modified time: 2022-03-15 13:56:46
  * @ Description:
  */
 
@@ -453,6 +453,7 @@ logic [31:0] bootloader_debug_data;
 
 
 logic bus_rst;
+logic [63:0] exec_timer;
 
 bootloaderModule #(
 	.WB_DATA(32),
@@ -481,9 +482,10 @@ boot0(
 	.cpu_rst(boot_cpu_rst),
 	.psw(64'h1122334455667788),
 	.start_block(32'h0),
-	.hmac_enable(1'b1),
+	.hmac_enable(switch_i[14]),
 	.error(),
-	.debug(bootloader_debug_data[7:0])
+	.debug(bootloader_debug_data[7:0]),
+	.exec_timer(exec_timer)
 );
 assign bootloader_debug_data[15:8] = {wb_bootloader_stb,wb_eluks0_stb};
 
@@ -676,7 +678,7 @@ display #(.N(32),.CLK_HZ(100000000)) seg7(
 	.seg(seg),
 	.an(AN)
 );
-assign debug_7_seg = bootloader_debug_data;
+assign debug_7_seg = switch_i[15] == 1 ? exec_timer[63:32] : exec_timer[31:0];
 
 ////////////////////////////////////////////////////////////////////////
 //

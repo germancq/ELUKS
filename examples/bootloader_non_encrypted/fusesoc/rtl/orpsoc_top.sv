@@ -2,7 +2,7 @@
  * @ Author: German Cano Quiveu, germancq@dte.us.es
  * @ Create Time: 2020-04-14 13:43:32
  * @ Modified by: German Cano Quiveu, germancq
- * @ Modified time: 2022-03-02 16:50:27
+ * @ Modified time: 2022-03-15 15:48:17
  * @ Description:
  */
 
@@ -538,6 +538,7 @@ bootloaderModule boot0(
 );
 */
 
+logic [63:0] exec_timer;
 
 wb_raw_boot #(
 	.WB_DATA(32),
@@ -565,8 +566,9 @@ boot0(
 	.cpu_rst(boot_cpu_rst),
 	.start_block(32'h0),
 	.total_blocks((1<<14)), //8MB/512 2^(23-9) - 1
-	.sclk_speed(switch_i[12:8]),
+	.sclk_speed(4'h1),
 	.debug(bootloader_debug_data[15:0]),
+	.exec_timer(exec_timer),
 	.btn_dbg(btn_debug)
 );
 
@@ -741,7 +743,7 @@ display #(.N(32),.CLK_HZ(100000000)) seg7(
 	.an(AN)
 );
 //assign debug_7_seg = switch_i[15] ? wb_m2s_or1k_i_adr : wb_s2m_or1k_i_dat;//bootloader_debug_data;
-assign debug_7_seg = bootloader_debug_data;//{bootloader_debug_data[15:0],4'b0,1'b0,wb_s2m_sdspi0_ack,wb_m2s_sdspi0_cyc,wb_m2s_sdspi0_stb,1'b0,wb_s2m_ddr2_bus_ack,wb_m2s_ddr2_bus_cyc,wb_m2s_ddr2_bus_stb};
+assign debug_7_seg = switch_i[15]==1 ? exec_timer[63:32] : exec_timer[31:0];//{bootloader_debug_data[15:0],4'b0,1'b0,wb_s2m_sdspi0_ack,wb_m2s_sdspi0_cyc,wb_m2s_sdspi0_stb,1'b0,wb_s2m_ddr2_bus_ack,wb_m2s_ddr2_bus_cyc,wb_m2s_ddr2_bus_stb};
 
 ////////////////////////////////////////////////////////////////////////
 //

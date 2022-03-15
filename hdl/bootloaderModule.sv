@@ -2,7 +2,7 @@
  * @ Author: German Cano Quiveu, germancq
  * @ Create Time: 2022-02-22 12:43:31
  * @ Modified by: German Cano Quiveu, germancq
- * @ Modified time: 2022-03-03 15:24:21
+ * @ Modified time: 2022-03-15 14:01:24
  * @ Description:
  */
 
@@ -41,6 +41,7 @@ module bootloaderModule
     
     output [31:0]                   debug,
     output logic                    error,
+    output [63:0]                   exec_timer,
     input                           dbg_btn
 );
     
@@ -71,6 +72,19 @@ module bootloaderModule
                 .dout(status)
             );
 
+
+
+    logic rst_exec_timer;
+    logic up_exec_timer;
+
+    counter #(.DATA_WIDTH(64)) counter_exec_timer(
+        .clk(wb_clk),
+        .rst(rst_exec_timer),
+        .up(up_exec_timer),
+        .down(1'b0),
+        .din(32'h0),
+        .dout(exec_timer)
+    );
 
     logic up_counter_ram_addr;
     logic [31:0] counter_ram_addr_o;
@@ -186,6 +200,9 @@ module bootloaderModule
     always_comb begin 
 
         next_state = current_state;
+
+        up_exec_timer = 1;
+        rst_exec_timer = 0;
         
         cpu_rst = 1;
         error = 0;
@@ -224,6 +241,7 @@ module bootloaderModule
 
         case (current_state)
             RST_STATE: begin
+                rst_exec_timer = 1;
                 rst_counter_rst_state = 0;
                 bus_rst = 1;
                 if(counter_rst_state_o > 32'h10) begin
@@ -437,6 +455,7 @@ module bootloaderModule
             end
             END_BOOT : begin
                 cpu_rst = 0; 
+                up_exec_timer = 0;
             end
 
             
@@ -457,6 +476,7 @@ module bootloaderModule
             end
             ERROR: begin
                 error = 1;
+                up_exec_timer = 0;
                 cpu_rst = 0;
             end
             default: ;

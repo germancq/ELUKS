@@ -2,7 +2,7 @@
  * @ Author: German Cano Quiveu, germancq
  * @ Create Time: 2021-06-09 17:26:46
  * @ Modified by: German Cano Quiveu, germancq
- * @ Modified time: 2022-03-02 16:24:16
+ * @ Modified time: 2022-03-15 13:59:02
  * @ Description:
  */
 
@@ -38,6 +38,7 @@ module wb_raw_boot #(
     input   [4:0]                   sclk_speed,
 
     output  [31:0]                  debug,
+    output  [63:0]                  exec_timer,
     input                           btn_dbg
 
 );
@@ -60,6 +61,18 @@ module wb_raw_boot #(
         .dout(counter_ram_addr_o)
     );
 
+
+    logic up_exec_timer;
+    logic rst_exec_timer;
+
+    counter #(.DATA_WIDTH(64)) counter_exec_timer(
+        .clk(wb_clk),
+        .rst(rst_exec_timer),
+        .up(up_exec_timer),
+        .down(1'b0),
+        .din(32'h0),
+        .dout(exec_timer)
+    );
 
     logic rst_counter_word;
     logic [7:0] counter_word_o;
@@ -140,6 +153,9 @@ module wb_raw_boot #(
         
         cpu_rst = 1;
 
+        rst_exec_timer = 0;
+        up_exec_timer = 1;
+
         wb_rst_o = 0;
 
         r_wb_adr_o_din = 0;
@@ -170,6 +186,7 @@ module wb_raw_boot #(
         case (current_state)
             IDLE: begin
                 cpu_rst = 0;
+                rst_exec_timer = 1;
 
                 rst_counter_word = 1;
                 rst_counter_ram_addr = 1;
@@ -281,7 +298,8 @@ module wb_raw_boot #(
                 //end
             end
             END_BOOT : begin
-                cpu_rst = 0; 
+                cpu_rst = 0;
+                up_exec_timer = 0; 
             end
 
             
