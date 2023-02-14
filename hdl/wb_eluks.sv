@@ -2,7 +2,7 @@
  * @ Author: German Cano Quiveu, germancq
  * @ Create Time: 2022-02-22 13:35:16
  * @ Modified by: German Cano Quiveu, germancq
- * @ Modified time: 2022-03-04 12:27:51
+ * @ Modified time: 2023-02-14 13:20:28
  * @ Description:
  */
 
@@ -80,7 +80,7 @@ module wb_eluks
     logic spi_r_multi_block;
     logic spi_err;
     logic eluks_error;
-
+    logic eluks_hmac_enable;
     
 
     eluks_wb_bridge #(
