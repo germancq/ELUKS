@@ -2,7 +2,7 @@
  * @ Author: German Cano Quiveu, germancq
  * @ Create Time: 2022-02-22 12:43:31
  * @ Modified by: German Cano Quiveu, germancq
- * @ Modified time: 2022-03-15 14:01:24
+ * @ Modified time: 2023-02-14 17:20:54
  * @ Description:
  */
 
@@ -62,7 +62,7 @@ module bootloaderModule
     logic status_w;
 
     assign total_blocks = status[WB_DATA-2:0];
-    assign eluks_error = status[WB_DATA-1];
+    assign eluks_error = status[WB_DATA-1:WB_DATA-1];
 
     register #(.DATA_WIDTH(WB_DATA)) reg_status(
                 .clk(wb_clk),
