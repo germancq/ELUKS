@@ -2,7 +2,7 @@
  * @ Author: German Cano Quiveu, germancq
  * @ Create Time: 2022-02-22 12:43:31
  * @ Modified by: German Cano Quiveu, germancq
- * @ Modified time: 2023-02-14 17:20:54
+ * @ Modified time: 2023-02-14 17:49:01
  * @ Description:
  */
 
@@ -384,6 +384,9 @@ module bootloaderModule
                 
             end
             SET_TOTAL_BLOCK_AND_ERROR: begin
+                //to take control of the wb_bus
+                wb_cyc_o = 1;
+
                 status_w = 1;
                 next_state = CHECK_ERROR;
             end
